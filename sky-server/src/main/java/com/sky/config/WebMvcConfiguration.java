@@ -2,8 +2,10 @@ package com.sky.config;
 
 import com.sky.interceptor.JwtTokenAdminInterceptor;
 import com.sky.json.JacksonObjectMapper;
+import com.sky.properties.UploadProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -29,6 +31,9 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 
     @Autowired
     private JwtTokenAdminInterceptor jwtTokenAdminInterceptor;
+
+    @Autowired
+    private UploadProperties uploadProperties;
 
     /**
      * 注册自定义拦截器
@@ -71,6 +76,18 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
         log.info("开始设置静态资源映射...");
         registry.addResourceHandler("/doc.html").addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+        // 保留默认静态资源处理
+        registry
+                .addResourceHandler("/**")
+                .addResourceLocations(
+                        "classpath:/META-INF/resources/",
+                        "classpath:/resources/",
+                        "classpath:/static/",
+                        "classpath:/public/"
+                );
+        // 映射外部目录为静态资源
+        registry.addResourceHandler(uploadProperties.getAccessPath())
+                .addResourceLocations("file:" + uploadProperties.getUploadDir());
     }
 
     /**

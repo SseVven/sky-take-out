@@ -6,3 +6,7 @@ sky:
     database: sky_take_out
     username: root
     password: '001216'
+  file:
+    # 文件上传位置
+    upload-dir: D:/AAAAAZZH/upload/
+    access-path: /image/**
