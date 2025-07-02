@@ -7,6 +7,12 @@
         values
             (#{name}, #{categoryId}, #{price}, #{image}, #{description}, #{createTime}, #{updateTime}, #{createUser}, #{updateUser}, #{status})
     </insert>
+    <delete id="deleteBatch">
+        delete from dish where id in
+        <foreach collection="ids" item="dishId" separator="," open="(" close=")">
+            #{dishId}
+        </foreach>
+    </delete>
     <select id="pageQuery" resultType="com.sky.vo.DishVO">
         select * from dish
         <where>
@@ -14,5 +20,11 @@
             <if test="categoryId != null">and category_id = #{categoryId}</if>
             <if test="status != null">and status = #{status}</if>
         </where>
+    </select>
+    <select id="list" resultType="com.sky.entity.Dish">
+        select * from dish where id in 
+            <foreach collection="ids" item="dishId" separator="," open="(" close=")">
+                #{dishId}
+            </foreach>
     </select>
 </mapper>
