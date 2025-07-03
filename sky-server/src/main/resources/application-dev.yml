@@ -10,3 +10,8 @@ sky:
     # 文件上传位置
     upload-dir: D:/AAAAAZZH/upload/
     access-path: /image/**
+  redis:
+    host: localhost
+    port: 6379
+    password: '001216'
+    database: 0
