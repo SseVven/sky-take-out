@@ -33,7 +33,7 @@ public class FileStorageUtil {
         Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
         // 生成静态资源访问路径
-        String url = "http://localhost:8080" +
+        String url = "http://192.168.137.100:8080" +
                 accessPath.substring(0, accessPath.indexOf('*')) +
                 fileName;
         return url;
